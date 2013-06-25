@@ -1,7 +1,6 @@
 Introduction
 ============
 
-${long_description or None}
 
 How to install
 ==============
