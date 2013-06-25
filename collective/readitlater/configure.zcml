@@ -12,7 +12,6 @@
 
   <i18n:registerTranslations directory="locales" />
 
-#if str($add_profile) == 'True'
   <genericsetup:registerProfile
       name="default"
       title="collective.readitlater"
@@ -21,7 +20,6 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
   <include file="upgrades.zcml" />
-#end if
 
   <interface
       interface=".layer.Layer"
