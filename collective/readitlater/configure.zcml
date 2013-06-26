@@ -26,6 +26,11 @@
       name="collective.readitlater"
       />
 
+  <permission
+      id="collective.readitlater.addurl"
+      title="collective.readitlater: addUrl"
+      />
+
   <!-- EXAMPLE:
   <browser:viewlet
       name="collective.someviewlet"
