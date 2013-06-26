@@ -6,7 +6,7 @@
   <browser:page
       for="*"
       name="collective_readitlater_iframe"
-      class=".external.IFrame"
+      class=".add_url.UrlFormWrapper"
       template="./templates/iframe.pt"
       layer="collective.readitlater.layer.Layer"
       permission="zope2.View"
@@ -38,6 +38,8 @@
       layer="collective.readitlater.layer.Layer"
       permission="zope2.View"
       />
+
+  <adapter factory=".add_url.UrlFormAdapter" />
 
   <!-- EXAMPLE:
   <browser:viewlet

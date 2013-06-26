@@ -1,5 +1,7 @@
-from zope.component import getMultiAdapter
+from plone.z3cform import z2
 from Products.Five.browser import BrowserView
+from z3c.form.interfaces import IFormLayer
+from zope.component import getMultiAdapter
 
 
 class ShowAll(BrowserView):
@@ -19,16 +21,6 @@ class ShowAll(BrowserView):
         self.script += "hsb.setAttribute('type','text/javascript');"
         self.script += "document.getElementsByTagName('head')[0].appendChild(hsb);"
         self.script += "})());"
-        return self.index()
-
-
-class IFrame(BrowserView):
-    def __init__(self, context, request):
-        self.context = context
-        self.request = request
-
-    def __call__(self):
-        self.url = self.request.form.get("url", "")
         return self.index()
 
 
