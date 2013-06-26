@@ -1,3 +1,4 @@
+from zope.component import getMultiAdapter
 from Products.Five.browser import BrowserView
 
 
@@ -7,7 +8,11 @@ class ShowAll(BrowserView):
         self.request = request
 
     def __call__(self):
-        self.url = 'http://localhost:8080/Plone/@@collective_readitlater_script'
+        context = self.context.aq_inner
+        portal_state = getMultiAdapter((context, self.request),
+                                      name=u'plone_portal_state')
+        path = portal_state.navigation_root_url()
+        self.url = '%s/@@collective_readitlater_script' % path
         self.script = "javascript:void((function(){"
         self.script += "var%20hsb=document.createElement('script');"
         self.script += "hsb.setAttribute('src','%s');" % self.url
@@ -33,8 +38,12 @@ class Script(BrowserView):
         self.request = request
 
     def __call__(self):
-        self.url_iframe = 'http://localhost:8080/Plone/@@collective_readitlater_iframe'
-        self.url_css = 'http://localhost:8080/Plone/@@collective_readitlater_style'
+        context = self.context.aq_inner
+        portal_state = getMultiAdapter((context, self.request),
+                                      name=u'plone_portal_state')
+        path = portal_state.navigation_root_url()
+        self.url_iframe = '%s/@@collective_readitlater_iframe' % path
+        self.url_css = '%s/@@collective_readitlater_style' % path
         self.request.response.setHeader('Content-Type',
                                         'text/javascript')
         return self.index()
