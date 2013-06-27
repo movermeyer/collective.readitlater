@@ -31,24 +31,10 @@
       title="collective.readitlater: addUrl"
       />
 
-  <!-- EXAMPLE:
-  <browser:viewlet
-      name="collective.someviewlet"
-      manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
-      class=".viewlets.MyViewlet"
-      layer=".interfaces.ILayer"
-      permission="zope2.View"
-      />
-  <include package="plone.app.contentmenu" />
-  <browser:page
-      for="*"
-      name="myview"
-      menu="plone_displayviews"
-      title="Galleria"
-      class=".myfile.MyView"
-      layer=".interfaces.ILayer"
-      permission="zope2.View"
-      />
-  -->
+  <utility
+    component=".vocabulary.contentVocabulary"
+    name="collective.readitlater.vocabulary.content"
+    provides="zope.schema.interfaces.IVocabularyFactory"
+    />
 
 </configure>
