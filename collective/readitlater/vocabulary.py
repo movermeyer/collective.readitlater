@@ -15,8 +15,8 @@ def contentVocabulary(context):
     for brain in brains:
         if sm.checkPermission('collective.readitlater: addUrl', brain.getObject()):
             terms.append(SimpleTerm(
-                baseNormalize(brain.id),
-                baseNormalize(brain.id),
+                baseNormalize(brain.UID),
+                baseNormalize(brain.UID),
                 brain.Title.decode('utf-8')
             ))
     return SimpleVocabulary(terms)

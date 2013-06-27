@@ -21,7 +21,11 @@ function add_iframe()
     jQuery(document).ready(function(jquery){
 	jquery("head").append('<link rel="stylesheet" type="text/css" tal:attributes="href string:${view/url_css}" />');
 	jquery("body").append('<div id="popup_readitlater"><p><a href="#">Close</a></p><iframe id="iframe_readitlater" src=""></iframe></div>');
-	jquery("#iframe_readitlater").attr("src", "<tal:block tal:replace="view/url_iframe"></tal:block>?url="+ encodeURIComponent(window.location.href));
+	url = encodeURIComponent(window.location.href)
+	title = encodeURIComponent(window.document.title)
+	description = encodeURIComponent(jquery('meta[name="description"]').attr('content'));
+
+	jquery("#iframe_readitlater").attr("src", "<tal:block tal:replace="view/url_iframe"></tal:block>?url="+ url +"&amp;title="+ title +"&amp;description="+ description);
 
 	jquery("#popup_readitlater a").click(function(e){
 	    jquery("#popup_readitlater").remove();

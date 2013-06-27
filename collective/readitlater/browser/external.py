@@ -1,4 +1,5 @@
 from plone.z3cform import z2
+from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from z3c.form.interfaces import IFormLayer
 from zope.component import getMultiAdapter
