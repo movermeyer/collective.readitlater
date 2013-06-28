@@ -7,6 +7,14 @@
   <head>
     <title i18n:translate="">Read it later's iframe</title>
     <style type="text/css">
+      .field
+      {
+        display: inline;
+      }
+      .fieldErrorBox
+      {
+        display: inline;
+      }
     </style>
   </head>
   <body>

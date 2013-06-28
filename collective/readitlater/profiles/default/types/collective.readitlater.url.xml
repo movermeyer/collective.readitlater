@@ -22,10 +22,10 @@
   </property>
 
   <!-- View information -->
-  <property name="default_view">view</property>
+  <property name="default_view">readitlater_view</property>
   <property name="default_view_fallback">False</property>
   <property name="view_methods">
-   <element value="view"/>
+   <element value="readitlater_view"/>
   </property>
 
   <property name="add_permission">collective.readitlater.addurl</property>
