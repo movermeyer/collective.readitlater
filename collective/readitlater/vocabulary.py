@@ -1,16 +1,23 @@
+import json
+
 from AccessControl import getSecurityManager
 from plone.i18n.normalizer.base import baseNormalize
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
+from zope.component import getUtility
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
+
+from collective.readitlater.registry import IReaditlaterSettings
 
 
 def contentVocabulary(context):
     sm = getSecurityManager()
     catalog = getToolByName(context, 'portal_catalog')
-    brains = catalog.searchResults(
-        Type={'query': 'Folder'},
-    )
+    registry = getUtility(IRegistry)
+    settings = registry.forInterface(IReaditlaterSettings)
+    folder_query = json.loads(settings.folder_query)
+    brains = catalog.searchResults(**folder_query)
     terms = []
     for brain in brains:
         if sm.checkPermission('collective.readitlater: addUrl', brain.getObject()):

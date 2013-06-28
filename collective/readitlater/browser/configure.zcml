@@ -14,6 +14,14 @@
 
   <browser:page
       for="*"
+      name="collective_readitlater_urladded"
+      template="./templates/urladded.pt"
+      layer="collective.readitlater.layer.Layer"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="*"
       name="collective_readitlater_show_all"
       class=".external.ShowAll"
       template="./templates/show_all.pt"

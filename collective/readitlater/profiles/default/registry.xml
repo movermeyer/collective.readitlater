@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<registry>
+    <records interface="collective.readitlater.registry.IReaditlaterSettings">
+        <value key="folder_query">{"Type": {"query": "Folder"}}</value>
+    </records>
+</registry>

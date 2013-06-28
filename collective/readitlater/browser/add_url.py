@@ -6,6 +6,7 @@ from plone.z3cform.layout import FormWrapper
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+import urllib
 from z3c.form import form
 from z3c.form import button
 from z3c.form.interfaces import ActionExecutionError
@@ -65,7 +66,7 @@ class UrlForm(AutoExtensibleForm, form.Form):
         except ValueError:
             raise ActionExecutionError(interface.Invalid(_(u'Could not add to folder.')))
         else:
-            self.status = _(u"URL saved.")
+            self.request.response.redirect('@@collective_readitlater_urladded')
 
     def _createUrl(self, folder, data):
         url = createContent('collective.readitlater.url')
@@ -90,3 +91,19 @@ class UrlForm(AutoExtensibleForm, form.Form):
 
 class UrlFormWrapper(FormWrapper):
     form = UrlForm
+
+    def update(self):
+        super(UrlFormWrapper, self).update()
+        portal_state = component.getMultiAdapter(
+            (self.context, self.request),
+            name="plone_portal_state"
+        )
+        if portal_state.anonymous():
+            url = self.request.form.get('url', '')
+            title = self.request.form.get('title', '')
+            description = self.request.form.get('description', '')
+            next_url = '@@collective_readitlater_iframe?'
+            next_url += 'url=%s&title=%s&description=%s' % (url, title, description)
+            next_url = urllib.quote(next_url.encode('utf-8'))
+            self.request.response.redirect('login?ajax_load=1&next=%s' % next_url)
+

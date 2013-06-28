@@ -35,6 +35,7 @@ setup(name='collective.readitlater',
       install_requires=[
           'setuptools',
           'plone.app.dexterity',
+          'plone.app.registry',
           'plone.directives.form',
           'collective.js.datatables',
           # -*- Extra requirements: -*-

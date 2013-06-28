@@ -9,6 +9,7 @@
     i18n_domain="collective.readitlater">
 
   <include package=".browser" />
+  <include package="plone.app.registry" />
 
   <i18n:registerTranslations directory="locales" />
 
@@ -20,6 +21,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
   <include file="upgrades.zcml" />
+
+  <browser:page
+      name="collective_readitlater_settings"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".registry.ReaditlaterSettingsControlPanel"
+      permission="cmf.ManagePortal"
+      />
 
   <interface
       interface=".layer.Layer"
