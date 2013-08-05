@@ -1,7 +1,7 @@
 from AccessControl import Unauthorized
 from plone.autoform.form import AutoExtensibleForm
-from plone.dexterity.utils import addContentToContainer
-from plone.dexterity.utils import createContent
+from plone.i18n.normalizer.base import baseNormalize
+from plone.supermodel import model
 from plone.z3cform.layout import FormWrapper
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
@@ -15,10 +15,15 @@ from zope import schema
 from zope import interface
 
 from collective.readitlater.i18n import _
-from collective.readitlater.url import IUrl
 
 
-class UrlFormSchema(IUrl):
+class UrlFormSchema(model.Schema):
+    url = schema.ASCIILine(title=_(u"URL"))
+    title = schema.TextLine(title=_(u"Title"))
+    description = schema.Text(
+        title=_(u"Description"),
+        required=False
+    )
     folder = schema.Choice(
         title=_(u"Folder"),
         vocabulary="collective.readitlater.vocabulary.content"
@@ -60,7 +65,7 @@ class UrlForm(AutoExtensibleForm, form.Form):
         if folder is None:
             raise ActionExecutionError(interface.Invalid(_(u'Unknown folder.')))
         try:
-            url = self._createUrl(folder, data)
+            self._createUrl(folder, data)
         except Unauthorized:
             raise ActionExecutionError(interface.Invalid(_(u'Permission denied.')))
         except ValueError:
@@ -69,12 +74,23 @@ class UrlForm(AutoExtensibleForm, form.Form):
             self.request.response.redirect('@@collective_readitlater_urladded')
 
     def _createUrl(self, folder, data):
-        url = createContent('collective.readitlater.url')
-        url.url = data['url']
-        url.title = data['title']
-        url.description = data['description']
-        addContentToContainer(folder, url)
-        return url
+        id = baseNormalize(data['title'])
+        if id in folder:
+            i = 1
+            while '%s-%d' % (id, i) in folder:
+                i += 1
+            id = '%s-%d' % (id, i)
+        url = folder.invokeFactory(type_name='Link', id=id)
+        link = folder[url]
+        link.remoteUrl = data['url']
+        link.title = data['title']
+        link.description = data['description']
+        # Dexterity Only
+        #url = createContent('Link')
+        #url.remoteUrl = data['url']
+        #url.title = data['title']
+        #url.description = data['description']
+        #addContentToContainer(folder, url)
 
     def _getFolder(self, folder_uid):
         catalog = getToolByName(self.context, 'portal_catalog')

@@ -4,15 +4,6 @@
     i18n_domain="collective.readitlater">
 
   <browser:page
-      for="collective.readitlater.url.IUrl"
-      name="readitlater_view"
-      class=".view.View"
-      template="./templates/view.pt"
-      layer="collective.readitlater.layer.Layer"
-      permission="zope2.View"
-      />
-
-  <browser:page
       for="*"
       name="collective_readitlater_iframe"
       class=".add_url.UrlFormWrapper"

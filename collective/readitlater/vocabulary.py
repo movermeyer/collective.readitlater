@@ -20,7 +20,7 @@ def contentVocabulary(context):
     brains = catalog.searchResults(**folder_query)
     terms = []
     for brain in brains:
-        if sm.checkPermission('collective.readitlater: addUrl', brain.getObject()):
+        if sm.checkPermission('Add portal content', brain.getObject()):
             terms.append(SimpleTerm(
                 baseNormalize(brain.UID),
                 baseNormalize(brain.UID),
