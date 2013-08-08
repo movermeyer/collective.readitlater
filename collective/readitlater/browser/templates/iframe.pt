@@ -32,6 +32,7 @@
       <tal:field tal:replace="structure view/form_instance/widgets/url/@@ploneform-render-widget" />
       <tal:field tal:replace="structure view/form_instance/widgets/title/@@ploneform-render-widget" />
       <tal:field tal:replace="structure view/form_instance/widgets/description/@@ploneform-render-widget" />
+      <tal:field tal:replace="structure view/form_instance/widgets/tags/@@ploneform-render-widget" />
       <tal:field tal:replace="structure view/form_instance/widgets/folder/@@ploneform-render-widget" />
       <tal:button tal:replace="structure python:view.form_instance.actions['submit'].render()" />
       <tal:block tal:condition="view/form_instance/enableCSRFProtection|nothing" tal:replace="structure context/@@authenticator/authenticator" />

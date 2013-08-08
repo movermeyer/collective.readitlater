@@ -1,6 +1,6 @@
 from AccessControl import Unauthorized
 from plone.autoform.form import AutoExtensibleForm
-from plone.i18n.normalizer.base import baseNormalize
+from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.supermodel import model
 from plone.z3cform.layout import FormWrapper
 from Products.CMFCore.utils import getToolByName
@@ -24,6 +24,11 @@ class UrlFormSchema(model.Schema):
         title=_(u"Description"),
         required=False
     )
+    tags = schema.Tuple(
+        title=_(u'Tags'),
+        value_type=schema.TextLine(),
+        required=False
+        )
     folder = schema.Choice(
         title=_(u"Folder"),
         vocabulary="collective.readitlater.vocabulary.content"
@@ -55,6 +60,10 @@ class UrlForm(AutoExtensibleForm, form.Form):
         description = self.request.form.get('description', '')
         if description != 'undefined':
             self.widgets['description'].value = description
+        tags = self.request.form.get('tags', '')
+        if tags != 'undefined':
+            self.widgets['tags'].value = tags.replace(', ', '\n')\
+                .replace(',', '\n')
 
     @button.buttonAndHandler(_(u"Read it later"), name='submit')
     def handleApply(self, action):
@@ -74,7 +83,8 @@ class UrlForm(AutoExtensibleForm, form.Form):
             self.request.response.redirect('@@collective_readitlater_urladded')
 
     def _createUrl(self, folder, data):
-        id = baseNormalize(data['title'])
+        normalize = component.getUtility(IIDNormalizer)
+        id = normalize.normalize(data['title'])
         if id in folder:
             i = 1
             while '%s-%d' % (id, i) in folder:
@@ -85,6 +95,9 @@ class UrlForm(AutoExtensibleForm, form.Form):
         link.remoteUrl = data['url']
         link.title = data['title']
         link.description = data['description']
+        link.subject = data['tags']
+        link.reindexObject()
+
         # Dexterity Only
         #url = createContent('Link')
         #url.remoteUrl = data['url']

@@ -24,8 +24,9 @@ function add_iframe()
 	url = encodeURIComponent(window.location.href)
 	title = encodeURIComponent(window.document.title)
 	description = encodeURIComponent(jquery('meta[name="description"]').attr('content'));
+	tags = encodeURIComponent(jquery('meta[name="keywords"]').attr('content'));
 
-	jquery("#iframe_readitlater").attr("src", "<tal:block tal:replace="view/url_iframe"></tal:block>?url="+ url +"&amp;title="+ title +"&amp;description="+ description);
+	jquery("#iframe_readitlater").attr("src", "<tal:block tal:replace="view/url_iframe"></tal:block>?url="+ url +"&amp;title="+ title +"&amp;description="+ description +"&amp;tags="+ tags);
 
 	jquery("#popup_readitlater a").click(function(e){
 	    jquery("#popup_readitlater").remove();
