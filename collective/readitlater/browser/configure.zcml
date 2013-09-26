@@ -27,6 +27,7 @@
       template="./templates/show_all.pt"
       layer="collective.readitlater.layer.Layer"
       permission="zope2.View"
+      allowed_interface="collective.readitlater.browser.external.IShowAll"
       />
 
   <browser:page

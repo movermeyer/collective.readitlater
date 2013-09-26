@@ -3,6 +3,11 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from z3c.form.interfaces import IFormLayer
 from zope.component import getMultiAdapter
+from zope import interface
+
+class IShowAll(interface.Interface):
+    def getBookmark():
+        """ Get script to bookmark """
 
 
 class ShowAll(BrowserView):
@@ -11,6 +16,10 @@ class ShowAll(BrowserView):
         self.request = request
 
     def __call__(self):
+        self.getBookmark()
+        return self.index()
+
+    def getBookmark(self):
         context = self.context.aq_inner
         portal_state = getMultiAdapter((context, self.request),
                                       name=u'plone_portal_state')
@@ -22,7 +31,7 @@ class ShowAll(BrowserView):
         self.script += "hsb.setAttribute('type','text/javascript');"
         self.script += "document.getElementsByTagName('head')[0].appendChild(hsb);"
         self.script += "})());"
-        return self.index()
+        return self.script
 
 
 class Script(BrowserView):
