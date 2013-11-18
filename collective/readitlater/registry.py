@@ -1,10 +1,13 @@
 import json
 from plone.app.registry.browser import controlpanel
-from z3c.form import interfaces
 from zope import interface
 from zope import schema
 
 from collective.readitlater.i18n import _
+
+folder_query_desc = (
+    u"Query used to search for folder the user can add urls in. In JSON."
+)
 
 
 class IReaditlaterSettings(interface.Interface):
@@ -13,7 +16,7 @@ class IReaditlaterSettings(interface.Interface):
     folder_query = schema.ASCII(
         title=_(u"Folder query"),
         description=_(u"help_readitlater_folder_query",
-                      default=u"Query used to search for folder the user can add urls in. In JSON."),
+                      default=folder_query_desc),
     )
 
     @interface.invariant

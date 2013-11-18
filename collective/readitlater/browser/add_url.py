@@ -1,12 +1,10 @@
+import urllib
 from AccessControl import Unauthorized
 from plone.autoform.form import AutoExtensibleForm
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.supermodel import model
 from plone.z3cform.layout import FormWrapper
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-import urllib
 from z3c.form import form
 from z3c.form import button
 from z3c.form.interfaces import ActionExecutionError
@@ -72,13 +70,16 @@ class UrlForm(AutoExtensibleForm, form.Form):
             return
         folder = self._getFolder(data['folder'])
         if folder is None:
-            raise ActionExecutionError(interface.Invalid(_(u'Unknown folder.')))
+            error = interface.Invalid(_(u'Unknown folder.'))
+            raise ActionExecutionError(error)
         try:
             self._createUrl(folder, data)
         except Unauthorized:
-            raise ActionExecutionError(interface.Invalid(_(u'Permission denied.')))
+            error = interface.Invalid(_(u'Permission denied.'))
+            raise ActionExecutionError(error)
         except ValueError:
-            raise ActionExecutionError(interface.Invalid(_(u'Could not add to folder.')))
+            error = interface.Invalid(_(u'Could not add to folder.'))
+            raise ActionExecutionError(error)
         else:
             self.request.response.redirect('@@collective_readitlater_urladded')
 
@@ -132,7 +133,9 @@ class UrlFormWrapper(FormWrapper):
             title = self.request.form.get('title', '')
             description = self.request.form.get('description', '')
             next_url = '@@collective_readitlater_iframe?'
-            next_url += 'url=%s&title=%s&description=%s' % (url, title, description)
+            next_url += 'url=%s&title=%s&description=%s' % (
+                url, title, description
+            )
             next_url = urllib.quote(next_url.encode('utf-8'))
-            self.request.response.redirect('login?ajax_load=1&next=%s' % next_url)
-
+            next_url = 'login?ajax_load=1&next=%s' % next_url
+            self.request.response.redirect(next_url)

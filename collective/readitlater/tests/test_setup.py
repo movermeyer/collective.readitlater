@@ -7,8 +7,16 @@ class TestSetup(base.IntegrationTestCase):
     stuff in profile are well activated (browserlayer, js, content types, ...)
     """
 
-    def test_xxx(self):
-        self.assertTrue(False)
+    def test_browserlayer(self):
+        from plone.browserlayer import utils
+        from collective.readitlater import layer
+        self.assertIn(layer.Layer, utils.registered_layers())
+
+    def test_controlpanel(self):
+        pass
+
+    def test_registry(self):
+        pass
 
 
 def test_suite():

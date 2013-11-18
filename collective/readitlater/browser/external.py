@@ -1,9 +1,7 @@
-from plone.z3cform import z2
-from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from z3c.form.interfaces import IFormLayer
 from zope.component import getMultiAdapter
 from zope import interface
+
 
 class IShowAll(interface.Interface):
     def getBookmark():
@@ -21,16 +19,19 @@ class ShowAll(BrowserView):
 
     def getBookmark(self):
         context = self.context.aq_inner
-        portal_state = getMultiAdapter((context, self.request),
-                                      name=u'plone_portal_state')
+        portal_state = getMultiAdapter(
+            (context, self.request), name=u'plone_portal_state'
+        )
         path = portal_state.navigation_root_url()
         self.url = '%s/@@collective_readitlater_script' % path
-        self.script = "javascript:void((function(){"
-        self.script += "var%20hsb=document.createElement('script');"
-        self.script += "hsb.setAttribute('src','%s');" % self.url
-        self.script += "hsb.setAttribute('type','text/javascript');"
-        self.script += "document.getElementsByTagName('head')[0].appendChild(hsb);"
-        self.script += "})());"
+        self.script = (
+            "javascript:void((function(){"
+            "var%20hsb=document.createElement('script');"
+            "hsb.setAttribute('src','%s');"
+            "hsb.setAttribute('type','text/javascript');"
+            "document.getElementsByTagName('head')[0].appendChild(hsb);"
+            "})());"
+        ) % self.url
         return self.script
 
 
@@ -41,8 +42,9 @@ class Script(BrowserView):
 
     def __call__(self):
         context = self.context.aq_inner
-        portal_state = getMultiAdapter((context, self.request),
-                                      name=u'plone_portal_state')
+        portal_state = getMultiAdapter(
+            (context, self.request), name=u'plone_portal_state'
+        )
         path = portal_state.navigation_root_url()
         self.url_iframe = '%s/@@collective_readitlater_iframe' % path
         self.url_css = '%s/@@collective_readitlater_style' % path
