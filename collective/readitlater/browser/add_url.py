@@ -26,7 +26,7 @@ class UrlFormSchema(model.Schema):
         title=_(u'Tags'),
         value_type=schema.TextLine(),
         required=False
-        )
+    )
     folder = schema.Choice(
         title=_(u"Folder"),
         vocabulary="collective.readitlater.vocabulary.content"
