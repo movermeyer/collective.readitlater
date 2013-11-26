@@ -11,6 +11,19 @@ The link is available at **@@collective_readitlater_show_all**.
 How to install
 ==============
 
+.. image:: https://pypip.in/v/collective.readitlater/badge.png
+    :target: https://crate.io/packages/collective.readitlater/
+
+.. image:: https://pypip.in/d/collective.readitlater/badge.png
+    :target: https://crate.io/packages/collective.readitlater/
+
+.. image:: https://secure.travis-ci.org/collective/collective.readitlater.png
+    :target: http://travis-ci.org/#!/collective/collective.readitlater
+
+.. image:: https://coveralls.io/repos/collective/collective.readitlater/badge.png?branch=master
+    :target: https://coveralls.io/r/collective/collective.readitlater
+
+
 This addon can be installed has any other addons. please follow official
 documentation_
 
