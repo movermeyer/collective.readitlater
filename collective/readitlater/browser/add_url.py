@@ -39,6 +39,11 @@ class UrlFormAdapter(object):
 
     def __init__(self, context):
         self.context = context
+        self.url = ""
+        self.title = u""
+        self.description = u""
+        self.tags = tuple()
+        self.folder = None
 
 
 class UrlForm(AutoExtensibleForm, form.Form):
@@ -49,8 +54,10 @@ class UrlForm(AutoExtensibleForm, form.Form):
     def update(self):
         super(UrlForm, self).update()
         self.widgets['url'].mode = 'hidden'
+        #detect submit
         if self.widgets['url'].value:
             return
+        #map widgets values with corresponding URL parameters
         url = self.request.form.get('url', '')
         self.widgets['url'].value = url
         title = self.request.form.get('title', '')
@@ -94,9 +101,12 @@ class UrlForm(AutoExtensibleForm, form.Form):
         url = folder.invokeFactory(type_name='Link', id=id)
         link = folder[url]
         link.remoteUrl = data['url']
-        link.title = data['title']
-        link.description = data['description']
-        link.subject = data['tags']
+        link.setTitle(data['title'])
+        link.setDescription(data['description'])
+        if hasattr(link, 'setSubject'):
+            link.setSubject(data['tags'])
+        else:
+            link.subject = data['tags']
         link.reindexObject()
 
         # Dexterity Only

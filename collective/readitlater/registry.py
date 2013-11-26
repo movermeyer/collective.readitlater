@@ -31,12 +31,6 @@ class ReaditlaterSettingsEditForm(controlpanel.RegistryEditForm):
     schema = IReaditlaterSettings
     label = _(u"collective.readitlater settings")
 
-    def updateFields(self):
-        super(ReaditlaterSettingsEditForm, self).updateFields()
-
-    def updateWidgets(self):
-        super(ReaditlaterSettingsEditForm, self).updateWidgets()
-
 
 class ReaditlaterSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
     form = ReaditlaterSettingsEditForm
