@@ -26,7 +26,7 @@ class ShowAll(BrowserView):
         self.url = '%s/@@collective_readitlater_script' % path
         self.script = (
             "javascript:void((function(){"
-            "var%20hsb=document.createElement('script');"
+            "var%%20hsb=document.createElement('script');"
             "hsb.setAttribute('src','%s');"
             "hsb.setAttribute('type','text/javascript');"
             "document.getElementsByTagName('head')[0].appendChild(hsb);"
