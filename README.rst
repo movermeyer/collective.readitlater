@@ -11,10 +11,10 @@ The link is available at **@@collective_readitlater_show_all**.
 How to install
 ==============
 
-.. image:: https://pypip.in/v/collective.readitlater/badge.png
+.. image:: https://img.shields.io/pypi/v/collective.readitlater.svg
     :target: https://crate.io/packages/collective.readitlater/
 
-.. image:: https://pypip.in/d/collective.readitlater/badge.png
+.. image:: https://img.shields.io/pypi/dm/collective.readitlater.svg
     :target: https://crate.io/packages/collective.readitlater/
 
 .. image:: https://secure.travis-ci.org/collective/collective.readitlater.png
